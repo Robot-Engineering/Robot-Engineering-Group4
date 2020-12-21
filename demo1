@@ -1,0 +1,33 @@
+import pandas as pd
+import os
+import numpy as np
+
+people = pd.read_excel(r'C:\Users\lenovo\Desktop\testdat\testdat\学生信息.xlsx', dtype={'图片位置': str})
+
+stu_num = list(people['学号'])
+# 读取照片目录
+catalog = []
+for i in os.listdir(r'C:\Users\lenovo\Desktop\testdat\testdat'):
+    if '10' in i:
+        catalog.append(i)
+
+# 获取已提交的列表
+uploaded = []
+j = 0  # 索引号
+
+for i in catalog:
+    if int(i) in stu_num:
+        people['图片位置'].at[j] = os.path.join(r'C:\Users\lenovo\Desktop\testdat\testdat', i)
+    j += 1
+
+
+# 给未提交的同学添加黄色高亮
+def not_upload(col):
+    return ['background-color:lime' if s == np.NaN else 'background-color:white' for s in col]
+
+people.style.apply(not_upload, subset=['学号','图片位置'])
+
+# 保存至原excel表
+people.to_excel(r'C:\Users\lenovo\Desktop\testdat\testdat\学生信息1.xlsx')
+
+print(people)
