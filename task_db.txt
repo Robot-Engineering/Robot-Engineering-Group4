@@ -1,0 +1,57 @@
+#建库
+
+create database db_logrob;			###logistics robot 物流机器人
+
+#建表
+
+@订单表
+
+
+ create table rb_order (
+
+    -> rb_quantity int,				       
+    -> client varchar(32),			### ’订购数量‘，’客户名称‘，’订单编号’，‘下单时间’，
+    -> order_reference varchar(32),		       ‘pattern of payment’，‘确认订单’
+    -> order_time datetime ,
+    -> order_PoP varchar(32),
+    -> order_confirmed tinyint(1)
+    -> );
+
+
+@物流机器人信息表
+
+create table rb_info(
+    -> model_number varchar(32),		###‘机器人编号’，‘机器人价格’，‘degree of freedom自由度’,
+    -> rb_price int,			    	        '工作载荷'，‘工作精度’，‘重复精度’，‘resolution ratio分辨率’
+    -> dof      int,				       ‘驱动模式’，‘工作空间’，‘控制方式’，‘工作速度’
+    -> working_load double(22,2),
+    -> work_precision double(20,6),
+    -> repeated_accuracy double(20,6),
+    -> r_ratio double(20,6),
+    -> drive_mode varchar(32),
+    -> working_space varchar(32),
+    -> control_method varchar(32),
+    -> work_speed double(20,2)
+    -> );
+
+@用户地址信息表
+
+ create table user_address(
+    -> username varchar(32),
+    -> location varchar(50),
+    -> user_phone varchar(20),
+    -> location_type varchar(32)  	### 地址类型：家庭，学校，公司 etc.
+    -> );
+
+     $CRUD的实现
+     %增
+     insert into user_address (username,location,user_phone,location_type) valuses ('Tom','China/Shanghai **apartment 101','12306','school');
+
+     %检索
+     select * from user_address where user_name ="Tom";
+
+     %改
+     update table user_address set location ='US/San Francisco ***' where location ='China/Shanghai **apartment 101';
+
+    %删
+    delete from user_address where user_name ='Tom';
